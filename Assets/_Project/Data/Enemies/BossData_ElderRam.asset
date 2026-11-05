@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3e38b1202761d4795c2f8acbd3a568, type: 3}
+  m_Name: BossData_ElderRam
+  m_EditorClassIdentifier: Assembly-CSharp::AWildSheepChase.Enemies.BossData
+  bossName: Wooden Dragon
+  detectionRange: 14
+  stoppingDistance: 2.2
+  turnSpeed: 240
+  windupTrackFraction: 0.6
+  transitionDuration: 1.6
+  phases:
+  - phaseName: Awakened
+    startsAtHealthFraction: 1
+    moveSpeed: 2.8
+    restTime: 1.4
+    windupScale: 1
+    extraFanWaves: 0
+    attacks: 0000000001000000i
+  - phaseName: Enraged
+    startsAtHealthFraction: 0.66
+    moveSpeed: 3.4
+    restTime: 1
+    windupScale: 0.9
+    extraFanWaves: 0
+    attacks: 000000000100000002000000i
+  - phaseName: Frenzy
+    startsAtHealthFraction: 0.33
+    moveSpeed: 4
+    restTime: 0.7
+    windupScale: 0.8
+    extraFanWaves: 1
+    attacks: 00000000010000000200000003000000i
+  swipe:
+    engageMin: 0
+    engageMax: 3.6
+    windup: 0.8
+    recovery: 0.9
+    range: 3.2
+    arcAngle: 160
+    damage: 25
+    knockback: 12
+  charge:
+    engageMin: 4
+    engageMax: 14
+    windup: 1
+    recovery: 0.8
+    speed: 14
+    duration: 0.9
+    hitRadius: 1.3
+    damage: 30
+    knockback: 14
+    wallStunTime: 1.8
+  fan:
+    engageMin: 3
+    engageMax: 18
+    windup: 0.8
+    recovery: 0.9
+    projectileCount: 5
+    spreadAngle: 60
+    waves: 1
+    waveInterval: 0.45
+  slam:
+    engageMin: 0
+    engageMax: 3.8
+    windup: 1.1
+    recovery: 1.1
+    radius: 4.5
+    damage: 30
+    knockback: 14
+    jumpClearHeight: 0.6
+  slamShake: {fileID: 11400000, guid: f077a92cca8aa99468d128438ade3512, type: 2}
+  crashShake: {fileID: 11400000, guid: f077a92cca8aa99468d128438ade3512, type: 2}
+  phaseShake: {fileID: 11400000, guid: f077a92cca8aa99468d128438ade3512, type: 2}
+  deathShake: {fileID: 11400000, guid: f077a92cca8aa99468d128438ade3512, type: 2}
