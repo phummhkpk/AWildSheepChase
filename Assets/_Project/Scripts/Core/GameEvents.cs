@@ -19,6 +19,9 @@ namespace AWildSheepChase.Core
         /// <summary>ข้อความสั้น ๆ แจ้งผู้เล่น เช่น "Locked: needs Dungeon Key"</summary>
         public static event Action<string> MessageRequested;
 
+        /// <summary>(เอฟเฟกต์, ตำแหน่งในโลก) AudioManager และ VfxManager ฟัง</summary>
+        public static event Action<GameEffect, Vector3> EffectRequested;
+
         public static void RequestCameraShake(CameraShakeProfile profile)
         {
             if (profile == null) return;
@@ -40,6 +43,11 @@ namespace AWildSheepChase.Core
         {
             if (string.IsNullOrEmpty(message)) return;
             MessageRequested?.Invoke(message);
+        }
+
+        public static void RequestEffect(GameEffect effect, Vector3 position)
+        {
+            EffectRequested?.Invoke(effect, position);
         }
     }
 }

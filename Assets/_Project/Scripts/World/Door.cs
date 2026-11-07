@@ -169,6 +169,8 @@ namespace AWildSheepChase.World
 
         private void BeginOpen()
         {
+            GameEvents.RequestEffect(GameEffect.DoorOpen, transform.position + Vector3.up);
+
             state = DoorState.Opening;
             progress = 0f;
 

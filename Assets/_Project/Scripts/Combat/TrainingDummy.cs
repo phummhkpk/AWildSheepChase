@@ -12,6 +12,7 @@ namespace AWildSheepChase.Combat
         [SerializeField, Min(0f)] private float flashDuration = 0.1f;
 
         public bool IsAlive => true;
+        public bool IsInvincible => false;
 
         private Rigidbody rb;
         private Material material;

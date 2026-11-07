@@ -227,7 +227,8 @@ namespace AWildSheepChase.Combat
             {
                 Collider col = overlapBuffer[i];
                 IDamageable damageable = col.GetComponentInParent<IDamageable>();
-                if (damageable == null || !damageable.IsAlive || hitTargets.Contains(damageable)) continue;
+                if (damageable == null || !damageable.IsAlive || damageable.IsInvincible
+                    || hitTargets.Contains(damageable)) continue;
 
                 // ใช้จุดที่ใกล้ที่สุดบน collider เพื่อให้ศัตรูตัวใหญ่ถูกตีได้ถูกต้อง
                 Vector3 toTarget = col.ClosestPoint(origin) - origin;

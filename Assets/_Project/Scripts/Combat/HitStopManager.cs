@@ -24,7 +24,7 @@ namespace AWildSheepChase.Combat
 
             if (running)
             {
-                Time.timeScale = 1f;
+                GameTime.SetHitStopScale(1f);
                 running = false;
             }
         }
@@ -48,14 +48,14 @@ namespace AWildSheepChase.Combat
         private IEnumerator HitStopRoutine()
         {
             running = true;
-            Time.timeScale = hitStopTimeScale;
+            GameTime.SetHitStopScale(hitStopTimeScale);
 
             while (Time.unscaledTime < endTimeUnscaled)
             {
                 yield return null;
             }
 
-            Time.timeScale = 1f;
+            GameTime.SetHitStopScale(1f);
             running = false;
         }
     }

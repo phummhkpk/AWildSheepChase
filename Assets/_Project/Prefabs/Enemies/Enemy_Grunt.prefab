@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 392783228556017603}
   - component: {fileID: 7048737881765445599}
   - component: {fileID: 6175209929538263434}
+  - component: {fileID: 4000775564749661881}
+  - component: {fileID: 946538741413366813}
   m_Layer: 8
   m_Name: Enemy_Grunt
   m_TagString: Untagged
@@ -201,6 +203,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   scatterRadius: 1
+--- !u!114 &4000775564749661881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902243775235585671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d281f93bf3b3346bc43b6bb4a4c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AWildSheepChase.Enemies.EnemyFx
+  effectHeight: 1
+--- !u!114 &946538741413366813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4902243775235585671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d562309c7c5e54243877900fd88f054f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AWildSheepChase.Enemies.EnemyAnimatorBridge
+  animator: {fileID: 0}
+  speedDamp: 0.08
 --- !u!1 &4996168348361058226
 GameObject:
   m_ObjectHideFlags: 0

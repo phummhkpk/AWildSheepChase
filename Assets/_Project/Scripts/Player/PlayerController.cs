@@ -21,6 +21,8 @@ namespace AWildSheepChase.Player
         public event Action DashEnded;
         public event Action Hurt;
         public event Action Died;
+        /// <summary>ยิงเมื่อผู้เล่นถูกย้ายตำแหน่งทันที (ค่า = ระยะที่ย้าย) กล้องฟังเพื่อวาร์ปตาม</summary>
+        public event Action<Vector3> Warped;
 
         public PlayerState State { get; private set; } = PlayerState.Idle;
         public bool IsGrounded { get; private set; }
@@ -185,6 +187,8 @@ namespace AWildSheepChase.Player
         /// <summary>ย้ายผู้เล่นไปจุดใหม่และกลับสู่สถานะปกติ (ใช้ตอน respawn และโหลดเซฟ)</summary>
         public void Respawn(Vector3 position, Quaternion rotation)
         {
+            Vector3 delta = position - transform.position;
+
             attackVelocity = Vector3.zero;
             hurtVelocity = Vector3.zero;
             jumpBufferedUntil = -1f;
@@ -195,6 +199,7 @@ namespace AWildSheepChase.Player
             transform.SetPositionAndRotation(position, rotation);
 
             SetState(PlayerState.Idle);
+            Warped?.Invoke(delta);
         }
 
         /// <summary>ทิศที่ผู้เล่นเล็ง (แนวราบ) ใช้ทั้งโจมตีและยิง</summary>

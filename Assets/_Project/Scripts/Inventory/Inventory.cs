@@ -15,7 +15,7 @@ namespace AWildSheepChase.Items
         public event Action<ItemData, int> ItemAdded;
         public event Action<ItemData> ItemUsed;
 
-        /// <summary>ใช้อ่านเฉย ๆ ห้ามแก้ไข (Save/Load ใน Milestone 10 จะใช้)</summary>
+        /// <summary>ใช้อ่านเฉย ๆ ห้ามแก้ไข (Save/Load ใช้)</summary>
         public IReadOnlyDictionary<ItemData, int> Items => counts;
 
         private readonly Dictionary<ItemData, int> counts = new Dictionary<ItemData, int>();
@@ -71,6 +71,37 @@ namespace AWildSheepChase.Items
 
             Changed?.Invoke(item, remaining);
             return true;
+        }
+
+        /// <summary>กำหนดจำนวนตรง ๆ (ใช้ตอนโหลดเซฟ) ไม่ยิง ItemAdded จึงไม่มีข้อความเก็บของเด้ง</summary>
+        public void SetCount(ItemData item, int amount)
+        {
+            if (item == null) return;
+
+            amount = Mathf.Clamp(amount, 0, item.MaxStack);
+            if (amount == Count(item)) return;
+
+            if (amount > 0)
+            {
+                counts[item] = amount;
+            }
+            else
+            {
+                counts.Remove(item);
+            }
+
+            Changed?.Invoke(item, amount);
+        }
+
+        /// <summary>ล้างกระเป๋าทั้งหมด (ใช้ตอนโหลดเซฟ)</summary>
+        public void ClearAll()
+        {
+            List<ItemData> keys = new List<ItemData>(counts.Keys);
+            foreach (ItemData key in keys)
+            {
+                counts.Remove(key);
+                Changed?.Invoke(key, 0);
+            }
         }
 
         /// <summary>ใช้ไอเทม 1 ชิ้น ถ้าไอเทมบอกว่าใช้สำเร็จ ค่อยหักจำนวน</summary>

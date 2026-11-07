@@ -22,6 +22,10 @@ namespace AWildSheepChase.Core
     public interface IDamageable
     {
         bool IsAlive { get; }
+
+        /// <summary>true = ตอนนี้ไม่รับดาเมจ (i-frame, Dash, บอสเปลี่ยน phase) ผู้โจมตีใช้ตัดสินว่าจะให้ hit-stop/shake หรือไม่</summary>
+        bool IsInvincible { get; }
+
         void TakeDamage(in DamageInfo info);
     }
 }

@@ -198,6 +198,8 @@ GameObject:
   - component: {fileID: 6794220386814564261}
   - component: {fileID: 5506457299871730218}
   - component: {fileID: 1343964101920389579}
+  - component: {fileID: 4186759998945602766}
+  - component: {fileID: 3017882544444028207}
   m_Layer: 8
   m_Name: Enemy_Archer
   m_TagString: Untagged
@@ -398,6 +400,33 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   scatterRadius: 1
+--- !u!114 &4186759998945602766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5364543046128477404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d281f93bf3b3346bc43b6bb4a4c007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AWildSheepChase.Enemies.EnemyFx
+  effectHeight: 1
+--- !u!114 &3017882544444028207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5364543046128477404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d562309c7c5e54243877900fd88f054f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AWildSheepChase.Enemies.EnemyAnimatorBridge
+  animator: {fileID: 0}
+  speedDamp: 0.08
 --- !u!1001 &2157880032818765898
 PrefabInstance:
   m_ObjectHideFlags: 0

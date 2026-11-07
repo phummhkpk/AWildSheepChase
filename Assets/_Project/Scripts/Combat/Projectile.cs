@@ -68,10 +68,17 @@ namespace AWildSheepChase.Combat
             IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
             if (damageable != null && damageable.IsAlive)
             {
+                bool wasInvincible = damageable.IsInvincible;
                 damageable.TakeDamage(new DamageInfo(damage, direction, knockback, source));
-                GameEvents.RequestHitStop(hitStopDuration);
+
+                // เป้าหมายอมตะ (Dash/i-frame) ไม่ได้รับดาเมจจริง จึงไม่ต้องให้เกมค้าง
+                if (!wasInvincible)
+                {
+                    GameEvents.RequestHitStop(hitStopDuration);
+                }
             }
 
+            GameEvents.RequestEffect(GameEffect.ProjectileImpact, hit.point);
             Release();
         }
 

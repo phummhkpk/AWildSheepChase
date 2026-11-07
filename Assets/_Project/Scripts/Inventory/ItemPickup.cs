@@ -6,6 +6,11 @@ namespace AWildSheepChase.Items
     [RequireComponent(typeof(Collider))]
     public class ItemPickup : MonoBehaviour
     {
+        /// <summary>ยิงเมื่อเก็บครบทั้งกอง (SaveManager ฟังเพื่อจดว่า Pickup ที่มี Id ถูกเก็บไปแล้ว)</summary>
+        public static event System.Action<ItemPickup> Collected;
+
+        [Tooltip("ของที่วางใน Scene ต้องตั้ง Id ไม่ซ้ำกัน (เซฟจะจำว่าเก็บแล้ว) ของดรอปจากศัตรูปล่อยว่างไว้")]
+        [SerializeField] private string pickupId;
         [SerializeField] private ItemData item;
         [SerializeField, Min(1)] private int amount = 1;
         [Tooltip("ส่วนภาพที่ลอยและหมุน (ไม่บังคับ)")]
@@ -24,6 +29,8 @@ namespace AWildSheepChase.Items
 
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorId = Shader.PropertyToID("_Color");
+
+        public string Id => pickupId;
 
         private MaterialPropertyBlock block;
         private Inventory touching;
@@ -127,6 +134,7 @@ namespace AWildSheepChase.Items
             if (amount <= 0)
             {
                 collected = true;
+                Collected?.Invoke(this);
                 Destroy(gameObject);
             }
         }

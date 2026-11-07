@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace AWildSheepChase.World
 {
-    /// <summary>จุดเซฟ: Collider ต้องเป็น Is Trigger ผู้เล่นเดินผ่านแล้วกลายเป็นจุดเกิดใหม่</summary>
+    /// <summary>จุดเซฟ: Collider ต้องเป็น Is Trigger ผู้เล่นเดินผ่านแล้วกลายเป็นจุดเกิดใหม่ (และเซฟเกมอัตโนมัติ)</summary>
     [RequireComponent(typeof(Collider))]
     public class Checkpoint : MonoBehaviour
     {
-        /// <summary>ยิงเมื่อมีการเปิดใช้ Checkpoint ใหม่ (PlayerRespawn ฟังอันนี้)</summary>
+        /// <summary>ยิงเมื่อมีการเปิดใช้ Checkpoint ใหม่ (PlayerRespawn และ SaveManager ฟังอันนี้)</summary>
         public static event Action<Checkpoint> Activated;
 
         [Tooltip("รหัส Checkpoint ใช้ตอน Save/Load ห้ามซ้ำกัน")]
@@ -22,7 +22,7 @@ namespace AWildSheepChase.World
         [SerializeField] private Color activeColor = new Color(0.2f, 0.9f, 1f);
         [Tooltip("ฟื้น HP/Stamina เต็มเฉพาะครั้งแรกที่ผ่าน")]
         [SerializeField] private bool restoreOnFirstActivation = true;
-        [SerializeField] private string message = "Checkpoint";
+        [SerializeField] private string message = "Checkpoint saved";
 
         private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
         private static readonly int ColorId = Shader.PropertyToID("_Color");
@@ -49,6 +49,14 @@ namespace AWildSheepChase.World
         private void OnDisable()
         {
             Activated -= OnAnyCheckpointActivated;
+        }
+
+        /// <summary>กู้สถานะจากเซฟ (ไม่ยิง event ไม่ฟื้น HP ไม่เซฟซ้ำ)</summary>
+        public void RestoreState(bool reached, bool active)
+        {
+            HasBeenReached = reached;
+            IsActive = active;
+            ApplyColor(active ? activeColor : inactiveColor);
         }
 
         private void OnAnyCheckpointActivated(Checkpoint other)
@@ -86,6 +94,7 @@ namespace AWildSheepChase.World
             }
 
             GameEvents.RequestMessage(message);
+            GameEvents.RequestEffect(GameEffect.CheckpointActivate, transform.position + Vector3.up);
             Activated?.Invoke(this);
         }
 
