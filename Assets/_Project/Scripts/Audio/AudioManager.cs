@@ -49,6 +49,7 @@ namespace AWildSheepChase.Audio
         private readonly Dictionary<GameEffect, AudioClip> clips = new Dictionary<GameEffect, AudioClip>();
         private readonly List<AudioClip> generatedClips = new List<AudioClip>();
         private AudioSource[] voices;
+        private AudioSource uiVoice; // เล่นได้แม้เกมหยุด (AudioListener.pause)
         private float[] lastPlayed;
         private int nextVoice;
 
@@ -62,6 +63,11 @@ namespace AWildSheepChase.Audio
                 source.spatialBlend = 0f;
                 voices[i] = source;
             }
+
+            uiVoice = gameObject.AddComponent<AudioSource>();
+            uiVoice.playOnAwake = false;
+            uiVoice.spatialBlend = 0f;
+            uiVoice.ignoreListenerPause = true;
 
             foreach (ClipOverride entry in overrides)
             {
@@ -113,10 +119,10 @@ namespace AWildSheepChase.Audio
             if (now - lastPlayed[index] < minRepeatInterval) return;
             lastPlayed[index] = now;
 
-            AudioSource source = GetVoice();
+            AudioSource source = effect == GameEffect.DialogueBlip ? uiVoice : GetVoice();
             source.clip = clip;
             source.pitch = 1f + UnityEngine.Random.Range(-pitchVariation, pitchVariation);
-            source.volume = masterVolume;
+            source.volume = masterVolume * VolumeSettings.Sfx;
             source.Play();
         }
 
@@ -187,6 +193,7 @@ namespace AWildSheepChase.Audio
                 case GameEffect.CheckpointActivate: return new ToneSpec(500f, 1000f, 0.35f, 0f, 0.4f);
                 case GameEffect.BossRoar: return new ToneSpec(110f, 60f, 1f, 0.5f, 0.7f);
                 case GameEffect.BossDefeated: return new ToneSpec(200f, 40f, 1.4f, 0.4f, 0.7f);
+                case GameEffect.DialogueBlip: return new ToneSpec(520f, 480f, 0.04f, 0.05f, 0.2f);
                 default: return new ToneSpec(440f, 440f, 0.1f, 0f, 0.2f);
             }
         }

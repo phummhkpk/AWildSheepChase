@@ -19,6 +19,7 @@ namespace AWildSheepChase.Core
         DoorOpen,
         CheckpointActivate,
         BossRoar,
-        BossDefeated
+        BossDefeated,
+        DialogueBlip
     }
 }

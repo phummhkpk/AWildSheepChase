@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AWildSheepChase.Core;
+using AWildSheepChase.Dialogue;
 using AWildSheepChase.Items;
 using AWildSheepChase.Player;
 using AWildSheepChase.Vitals;
@@ -23,6 +24,7 @@ namespace AWildSheepChase.SaveLoad
         private Room[] rooms = new Room[0];
         private Checkpoint[] checkpoints = new Checkpoint[0];
         private ItemPickup[] scenePickups = new ItemPickup[0];
+        private DialogueNpc[] npcs = new DialogueNpc[0];
         private readonly HashSet<string> collectedPickups = new HashSet<string>();
         private bool ready;
 
@@ -57,6 +59,7 @@ namespace AWildSheepChase.SaveLoad
             rooms = FindObjectsByType<Room>();
             checkpoints = FindObjectsByType<Checkpoint>();
             scenePickups = FindObjectsByType<ItemPickup>();
+            npcs = FindObjectsByType<DialogueNpc>();
             ready = true;
 
             WarnDuplicates();
@@ -131,6 +134,14 @@ namespace AWildSheepChase.SaveLoad
             }
 
             data.collectedPickupIds.AddRange(collectedPickups);
+
+            foreach (DialogueNpc npc in npcs)
+            {
+                if (npc != null && npc.HasTalked && !string.IsNullOrEmpty(npc.Id))
+                {
+                    data.talkedNpcIds.Add(npc.Id);
+                }
+            }
 
             return SaveSystem.Write(data);
         }
@@ -208,6 +219,16 @@ namespace AWildSheepChase.SaveLoad
                 }
             }
 
+            // 5.5) NPC ที่เคยคุยจบแล้ว
+            HashSet<string> talkedNpcs = new HashSet<string>(data.talkedNpcIds);
+            foreach (DialogueNpc npc in npcs)
+            {
+                if (npc != null && !string.IsNullOrEmpty(npc.Id))
+                {
+                    npc.RestoreState(talkedNpcs.Contains(npc.Id));
+                }
+            }
+
             // 6) ผู้เล่น
             if (spawn != null)
             {
@@ -259,6 +280,14 @@ namespace AWildSheepChase.SaveLoad
             }
 
             CheckDuplicates("Pickup", ids);
+
+            ids.Clear();
+            foreach (DialogueNpc npc in npcs)
+            {
+                if (!string.IsNullOrEmpty(npc.Id)) ids.Add(npc.Id);
+            }
+
+            CheckDuplicates("NPC", ids);
         }
 
         private void CheckDuplicates(string kind, List<string> ids)

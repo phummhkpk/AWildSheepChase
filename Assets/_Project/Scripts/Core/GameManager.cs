@@ -98,7 +98,8 @@ namespace AWildSheepChase.Core
 
         public void Pause()
         {
-            if (State != GameState.Playing) return;
+            // ถ้าเวลาถูกหยุดอยู่แล้ว (เช่น กำลังคุยกับ NPC) ห้ามเปิดเมนู Pause ซ้อน
+            if (State != GameState.Playing || GameTime.IsPaused) return;
 
             GameTime.SetPaused(true);
             SetPlayerInput(false);

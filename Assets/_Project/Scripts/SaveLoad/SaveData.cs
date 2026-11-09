@@ -46,5 +46,6 @@ namespace AWildSheepChase.SaveLoad
         public List<string> reachedCheckpointIds = new List<string>();
         public List<RoomSaveEntry> rooms = new List<RoomSaveEntry>();
         public List<string> collectedPickupIds = new List<string>();
+        public List<string> talkedNpcIds = new List<string>();
     }
 }
